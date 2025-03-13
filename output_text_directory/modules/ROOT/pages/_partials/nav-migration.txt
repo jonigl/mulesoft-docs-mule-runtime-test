@@ -1,0 +1,131 @@
+-   Mule 4 for Mule 3 Users
+
+    -   What’s New in Mule 4
+
+    -   Mule 4
+
+        -   Studio 7
+
+        -   Mule Message
+
+        -   DataWeave Expression Language
+
+        -   Transformation and Streaming
+
+        -   Connectors
+
+        -   Error Handlers
+
+        -   Java Integration
+
+        -   DataWeave Language Changes
+
+        -   Packaging Applications
+
+        -   Configuring Applications
+
+        -   Mule 4 Programming Model
+
+        -   Execution Engine, Threads, and Concurrency
+
+    -   Migration to Mule 4
+
+        -   Prepare to Migrate
+
+        -   Manual Migration Process
+
+        -   Mule 3 to Mule 4 Cheat Sheet
+
+        -   Migrating Core Components
+
+            -   Migrate the Batch Component
+
+            -   Migrate the Choice Router
+
+            -   Migrate Enrichers to Target Variables
+
+            -   Migrate Exception Strategies to Error Handlers
+
+            -   Migrate Filters
+
+            -   Migrate the For Each Component
+
+            -   Migrate Message Properties
+
+            -   Migrate the Poll Component
+
+            -   Migrate Reconnection Strategies
+
+            -   Migrate the Scatter-Gather Router
+
+            -   Migrate the Secure Properties Placeholder
+
+            -   Migrate Security Filters
+
+            -   Migrate Splitter/Aggregator
+
+            -   Migrate Transformers
+
+            -   Migrate Transports
+
+            -   Migrate Until Successful
+
+            -   Migrate Watermarks
+
+        -   Migrate Connectors
+
+            -   Migrate the Anypoint Enterprise Security Module (AES)
+
+            -   Migrate to the AMQP Connector
+
+            -   Migrate the Database Connector
+
+            -   Migrate to the Email Connector
+
+            -   Migrate the File Connector
+
+            -   Migrate the FTP and SFTP Connector
+
+            -   Migrate the HTTP Connector
+
+            -   Migrate the JSON Module
+
+            -   Migrate the JMS Connector
+
+            -   Migrate the OAuth2 Provider
+
+            -   Migrate the Object Store Connector
+
+            -   Migrate the Scripting Module
+
+            -   Migrate the Spring Module
+
+            -   Migrate the Validation Module
+
+            -   Migrate the VM Module
+
+            -   Migrate Watermarks
+
+            -   Migrate the Web Service Consumer Module
+
+            -   Migrate the XML Module
+
+        -   Migrating an APIkit Application
+
+        -   Migrating API Gateways
+
+            -   Migrate API Gateways: Autodiscovery
+
+            -   Migrate Mule 3 Applications Managed in API Manager
+
+            -   Migrate API Policies
+
+            -   Migrate API Proxies
+
+            -   Migrate Mule Runtime Configurations for API Gateways
+
+        -   Migrating from MEL to DataWeave
+
+        -   Migrating from DataWeave 1.0 to 2.x
+
+            -   Migrating Test Structure (MUnit)

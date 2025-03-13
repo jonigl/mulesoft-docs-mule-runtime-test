@@ -1,0 +1,82 @@
+Because event tracking requires processing and network overhead to
+aggregate and store the events that Mule runtime engine generates, it is
+disabled by default. However, you can enable and configure default
+events tracking for connectors or message processors that support it, at
+one of two levels:
+
+-   At the flow level
+
+-   At the message processor (connector or component) level, which takes
+    precedence over the flow-level setting
+
+After you enable event tracking, customize the transaction ID to
+identify specific tracked events so that you can analyze them at
+runtime.
+
+Use this option in the Flow component to enable default event tracking
+for all elements in a flow that support event tracking. You can disable
+tracking for specific processors or connectors to override the flow
+level setting.
+
+Steps to enable default events tracking for all components in a flow:
+
+1.  Select your flow component to open the properties view.
+
+2.  Enable default business events using either the UI or XML:
+
+    -   In the UI, select Enable default events tracking:
+
+        [A flow configuration interface for JMS processing with options
+        to enable event tracking]
+
+    -   In the XML, add attribute tracking:enable-default-events="true"
+        to the flow element:
+
+            <flow name="testFlow" tracking:enable-default-events="true">
+
+3.  Save your settings.
+
+You can enable event tracking on individual connectors and Mule
+components that support event tracking.
+
+The following Mule components provide a configuration for enabling
+business events:
+
+-   Choice router
+
+-   Round Robin router
+
+-   First Successful router
+
+Steps to enable default events tracking for an individual component:
+
+1.  Open the connector or component properties view.
+
+2.  Enable default business events using any of the following options:
+
+    -   In the UI, select Enable default events tracking:
+
+        [A business event tracking within a choice component]
+
+    -   In the XML, add attribute tracking:enable-default-events="true"
+        inside your component element:
+
+            <flow name="flow">
+              ...
+                <choice doc:name="Choice" tracking:enable-default-events="true"/>
+              ...
+            </flow>
+
+3.  Save your settings.
+
+Customize the Transaction ID
+
+Unresolved directive in business-events-in-components.adoc -
+include::partial$set-transaction-id.adoc[tag=transactionIdIntro]
+
+Unresolved directive in business-events-in-components.adoc -
+include::partial$set-transaction-id.adoc[tag=transactionIdConfigure]
+
+See Also
+
+Business Events

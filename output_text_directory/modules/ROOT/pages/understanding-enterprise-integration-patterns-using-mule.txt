@@ -1,0 +1,118 @@
+Enterprise Integration Patterns are accepted solutions to recurring
+problems within a given context. The patterns provide a framework for
+designing, building messaging and integration systems, as well as a
+common language for teams to use when architecting solutions.
+
+Mule supports most of the patterns shown in the Enterprise Integration
+Patterns book written by Gregor Hohpe and Bobby Woolf.
+
+Mule reduces the effort required when building integrations by
+implementing the patterns that you use to design solutions. You can then
+simply configure and use these same patterns in Mule.
+
+Mapping Enterprise Integration Patterns into Mule Objects
+
+Review the following list of Enterprise Integration Patterns that can be
+mapped directly to Mule objects:
+
+Integration Styles
+
++-----------------------------------+-----------------------------------+
+| Pattern                           | Mapping to a Mule Object          |
++===================================+===================================+
+| File Transfer                     | File Connector                    |
++-----------------------------------+-----------------------------------+
+| Shared Database                   | DataBase Connector                |
++-----------------------------------+-----------------------------------+
+| Remote Procedure Invocation       | Mule APIs are meant to work like  |
+|                                   | this procedure or even doing      |
+|                                   | requests to external APIs.        |
++-----------------------------------+-----------------------------------+
+| Messaging                         | Mule is all about Messaging.      |
++-----------------------------------+-----------------------------------+
+
+Messaging Systems
+
++-----------------------------------+-----------------------------------+
+| Pattern                           | Mapping to a Mule Object          |
++===================================+===================================+
+| Message Channel                   | Mule provides a message channel   |
+|                                   | that connects the message         |
+|                                   | processors in a flow.             |
++-----------------------------------+-----------------------------------+
+| Pipes and Filters                 | A flow implements a pipe and      |
+|                                   | filter architecture.              |
++-----------------------------------+-----------------------------------+
+| Message Router                    | Message Routers.                  |
++-----------------------------------+-----------------------------------+
+| Message Translator                | Message Transformer.              |
++-----------------------------------+-----------------------------------+
+| Message Endpoint                  | mule-sdk::sources.xml and         |
+|                                   | Operations.                       |
++-----------------------------------+-----------------------------------+
+
+Messaging Channels
+
++-----------------------------------+-----------------------------------+
+| Pattern                           | Mapping to a Mule Object          |
++===================================+===================================+
+| Point-to-Point Channel            | The default channel within a      |
+|                                   | flow.                             |
++-----------------------------------+-----------------------------------+
+| Message Bus                       | Mule is a message bus.            |
++-----------------------------------+-----------------------------------+
+| Guaranteed Delivery               | Using Reliability Patterns.       |
++-----------------------------------+-----------------------------------+
+
+Message Construction
+
++-----------------------------------+-----------------------------------+
+| Pattern                           | Mapping to a Mule Object          |
++===================================+===================================+
+| Event Message                     | Mule transmits events from        |
+|                                   | different Application or          |
+|                                   | Processors.                       |
++-----------------------------------+-----------------------------------+
+| Request Reply                     | Mule uses connectors that         |
+|                                   | facilitate request-reply wise     |
+|                                   | operations, or using Reliability  |
+|                                   | Patterns.                         |
++-----------------------------------+-----------------------------------+
+
+Message Routing
+
++-----------------------------------+-----------------------------------+
+| Pattern                           | Mapping to a Mule Object          |
++===================================+===================================+
+| Content-Based Router              | Choice Router.                    |
++-----------------------------------+-----------------------------------+
+| Message Filter                    | Validation Module.                |
++-----------------------------------+-----------------------------------+
+| Dynamic Routing                   | Message Routers.                  |
++-----------------------------------+-----------------------------------+
+| Scatter Gather                    | Scatter Gather Router.            |
++-----------------------------------+-----------------------------------+
+| Splitter                          | Foreach Scope, Parape and Batch.  |
++-----------------------------------+-----------------------------------+
+| Aggregator                        | Aggregator Module.                |
++-----------------------------------+-----------------------------------+
+
+Message Transformation
+
++-----------------------------------+-----------------------------------+
+| Pattern                           | Mapping to a Mule Object          |
++===================================+===================================+
+| Content Enricher                  | Target Variables.                 |
++-----------------------------------+-----------------------------------+
+
+Messaging Endpoints
+
++-----------------------------------+-----------------------------------+
+| Pattern                           | Mapping to a Mule Object          |
++===================================+===================================+
+| Polling Consumer                  | mule-sdk::sources.xml.            |
++-----------------------------------+-----------------------------------+
+| Transactional Client              | Transaction Management.           |
++-----------------------------------+-----------------------------------+
+| Idempotent Receiver               | Redelivery Policy.                |
++-----------------------------------+-----------------------------------+

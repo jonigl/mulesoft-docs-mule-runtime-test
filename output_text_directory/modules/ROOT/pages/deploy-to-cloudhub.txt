@@ -1,0 +1,409 @@
+mule-runtime::partial$mmp-concept.adoc
+
+reuse::partial$non-inclusive-banner.adoc
+
+In addition to using Anypoint Studio, Anypoint Runtime Manager, or the
+Anypoint Platform CLI to deploy applications to CloudHub, you can also
+deploy, redeploy, or undeploy applications by using the Mule Maven
+plugin. To do so, you must meet certain prerequisites, and configure
+your CloudHub deployment strategy in your project’s pom.xml file.
+
+If you want to deploy applications to CloudHub using a different method,
+see:
+
+-   Deploy Applications to CloudHub Using Anypoint Studio
+
+-   Deploy Applications to CloudHub Using the Anypoint CLI
+
+-   Deploy Applications to CloudHub Using Runtime Manager
+
+Prerequisites
+
+Before you can deploy to CloudHub using the Mule Maven plugin, you must
+complete the following tasks:
+
+-   Add the Mule Maven plugin to your project
+
+    See Add the Mule Maven Plugin to a Mule Project for instructions.
+
+-   If you are using the HTTP Listener as source for your flow, you need
+    to set its host to 0.0.0.0 and its port to ${http.port}
+
+-   Declare all external classes and resources in the exportedPackages
+    and exportedResources fields on the mule-artifact.json file
+
+Configure the CloudHub Deployment Strategy
+
+Configure the CloudHub deployment strategy in your project’s pom.xml
+file so you can deploy, redeploy and undeploy your Mule application
+using the Mule Maven plugin.
+
+Inside the plugin element in your project’s pom.xml file, configure your
+CloudHub deployment, replacing the placeholder values with your CloudHub
+information:
+
+    <plugin>
+    link:mule-runtime::example$mmp-concept-config.xml[role=include]
+      <configuration>
+        <cloudHubDeployment>
+          <uri>https://anypoint.mulesoft.com</uri>
+          <muleVersion>${app.runtime}</muleVersion>
+          <username>${username}</username>
+          <password>${password}</password>
+          <applicationName>${cloudhub.application.name}</applicationName>
+          <environment>${environment}</environment>
+          <region>${region}</region>
+          <workers>${workers}</workers>
+          <workerType>${workerType}</workerType>
+          <properties>
+            <key>value</key>
+          </properties>
+        </cloudHubDeployment>
+      </configuration>
+    </plugin>
+
+Deploy to CloudHub
+
+From the command line in your project’s folder, package the app and
+execute the deploy goal:
+
+    mvn clean deploy -DmuleDeploy
+
+Redeploy to CloudHub
+
+To redeploy a Mule application using Mule Maven plugin, run
+mvn clean deploy -DmuleDeploy as you did to previously deploy the app.
+CloudHub rewrites the app you had deployed.
+
+Undeploy from CloudHub
+
+To undeploy a Mule application using Mule Maven plugin, run the
+following command:
+
+    mvn mule:undeploy
+
+The undeploy command also deletes the app in Mule Maven plugin 3.3.0 and
+later versions.
+
+Authentication Methods
+
+mule-runtime::partial$mmp-concept.adoc
+
+mule-runtime::partial$mmp-concept.adoc
+
+For a detailed description of the configuration parameters, see the
+CloudHub Deployment Reference.
+
+CloudHub Deployment Reference
+
+The following table shows the available parameters to configure the
+CloudHub deployment strategy in your project’s pom.xml file.
+
++----------------------+----------------------+-----------------------+
+| Parameter            | Description          | Required              |
++======================+======================+=======================+
+| cloudHubDeployment   | Top-level element    | Yes                   |
++----------------------+----------------------+-----------------------+
+| uri                  | Your Anypoint        | No                    |
+|                      | Platform URI         |                       |
+|                      | If not set, by       |                       |
+|                      | default this value   |                       |
+|                      | is set to            |                       |
+|                      | https://an           |                       |
+|                      | ypoint.mulesoft.com. |                       |
++----------------------+----------------------+-----------------------+
+| muleVersion          | The Mule runtime     | Yes                   |
+|                      | engine version to    |                       |
+|                      | run in your CloudHub |                       |
+|                      | instance.            |                       |
+|                      | Ensure that this     |                       |
+|                      | value is equal to or |                       |
+|                      | higher than the      |                       |
+|                      | earliest required    |                       |
+|                      | Mule version of your |                       |
+|                      | application.         |                       |
+|                      | Example value: 4.3.0 |                       |
+|                      | Starting with Mule   |                       |
+|                      | 4.5, deployments to  |                       |
+|                      | CloudHub accept the  |                       |
+|                      | Mule version exact   |                       |
+|                      | name or the semantic |                       |
+|                      | versioning, which    |                       |
+|                      | deploys the latest   |                       |
+|                      | version of Mule      |                       |
+|                      | runtime.             |                       |
+|                      | Example values: 4.6, |                       |
+|                      | 4.6-e-java8 (Edge),  |                       |
+|                      | 4.6-e-java17 (Edge), |                       |
+|                      | 4.6-java8 (LTS),     |                       |
+|                      | 4.6-java17 (LTS)     |                       |
+|                      | When using Mule      |                       |
+|                      | Maven plugin         |                       |
+|                      | versions 3.8.0 and   |                       |
+|                      | 4.0.0 for            |                       |
+|                      | deployments,         |                       |
+|                      | MuleSoft doesn’t     |                       |
+|                      | guarantee support    |                       |
+|                      | for LTS channel. We  |                       |
+|                      | recommend that you   |                       |
+|                      | use Mule Maven       |                       |
+|                      | plugin version 4.1.1 |                       |
+|                      | or later. For        |                       |
+|                      | example, specifying  |                       |
+|                      | <muleVersion>4.6-    |                       |
+|                      | java17</muleVersion> |                       |
+|                      | in the plugin 3.8.0  |                       |
+|                      | or 4.0.0 deploys the |                       |
+|                      | application with an  |                       |
+|                      | Edge release channel |                       |
+|                      | and a Java 8         |                       |
+|                      | selection. To        |                       |
+|                      | specify              |                       |
+|                      | releaseChannel and   |                       |
+|                      | javaVersion, upgrade |                       |
+|                      | the plugin to        |                       |
+|                      | version 4.1.1 or     |                       |
+|                      | later.               |                       |
++----------------------+----------------------+-----------------------+
+| releaseChannel       | Set the name of the  | No                    |
+|                      | release channel to   |                       |
+|                      | use for the selected |                       |
+|                      | Mule version.        |                       |
+|                      | Supported values are |                       |
+|                      | NONE, EDGE, and LTS. |                       |
+|                      | If you don’t specify |                       |
+|                      | a Mule version, the  |                       |
+|                      | default Mule version |                       |
+|                      | for the selected     |                       |
+|                      | release channel is   |                       |
+|                      | used. If the         |                       |
+|                      | selected release     |                       |
+|                      | channel doesn’t      |                       |
+|                      | exist, an error      |                       |
+|                      | occurs.              |                       |
++----------------------+----------------------+-----------------------+
+| javaVersion          | Set the name of the  | No                    |
+|                      | Java version to use  |                       |
+|                      | for the selected     |                       |
+|                      | Mule version.        |                       |
+|                      | Supported values are |                       |
+|                      | 8 and 17. If you     |                       |
+|                      | don’t specify a Mule |                       |
+|                      | version, the default |                       |
+|                      | Mule version for the |                       |
+|                      | selected Java        |                       |
+|                      | version is used. If  |                       |
+|                      | the Java version you |                       |
+|                      | select isn’t         |                       |
+|                      | available for the    |                       |
+|                      | specified Mule       |                       |
+|                      | version, an error    |                       |
+|                      | occurs.              |                       |
++----------------------+----------------------+-----------------------+
+| username             | Your CloudHub        | Only when using       |
+|                      | username             | Anypoint Platform     |
+|                      |                      | credentials to login. |
++----------------------+----------------------+-----------------------+
+| password             | Your CloudHub        | Only when using       |
+|                      | password             | Anypoint Platform     |
+|                      |                      | credentials to login. |
++----------------------+----------------------+-----------------------+
+| applicationName      | The name of your     | Yes                   |
+|                      | application in       |                       |
+|                      | CloudHub             |                       |
+|                      | This name is part of |                       |
+|                      | the domain of your   |                       |
+|                      | deployed app. For    |                       |
+|                      | example, naming your |                       |
+|                      | application          |                       |
+|                      | application-1 makes  |                       |
+|                      | your app’s public    |                       |
+|                      | domain               |                       |
+|                      | applic               |                       |
+|                      | ation-1.cloudhub.io. |                       |
++----------------------+----------------------+-----------------------+
+| artifact             | The absolute path of | No                    |
+|                      | the JAR file to be   |                       |
+|                      | deployed             |                       |
+|                      | If not set, the path |                       |
+|                      | defaults to the      |                       |
+|                      | location of the JAR  |                       |
+|                      | file generated at    |                       |
+|                      | the package phase.   |                       |
++----------------------+----------------------+-----------------------+
+| environment          | The CloudHub         | Yes                   |
+|                      | environment to which | mule-runtime::par     |
+|                      | you want to deploy   | tial$mmp-concept.adoc |
+|                      | This value must      |                       |
+|                      | match any            |                       |
+|                      | environment          |                       |
+|                      | configured in your   |                       |
+|                      | CloudHub account.    |                       |
+|                      |                      |                       |
+|                      |     <environment>S   |                       |
+|                      | andbox</environment> |                       |
++----------------------+----------------------+-----------------------+
+| workers              | The number of        | No                    |
+|                      | workers              |                       |
+|                      | By default, this     |                       |
+|                      | value is 1.          |                       |
++----------------------+----------------------+-----------------------+
+| workerType           | Size of each worker; | No                    |
+|                      | one of the following |                       |
+|                      | values:              |                       |
+|                      |                      |                       |
+|                      | -   MICRO (default;  |                       |
+|                      |     0.1 vCores)      |                       |
+|                      |                      |                       |
+|                      | -   SMALL (0.2       |                       |
+|                      |     vCores)          |                       |
+|                      |                      |                       |
+|                      | -   MEDIUM (1 vCore  |                       |
+|                      |     )                |                       |
+|                      |                      |                       |
+|                      | -   LARGE (2 vCores) |                       |
+|                      |                      |                       |
+|                      | -   XLARGE (4        |                       |
+|                      |     vCores)          |                       |
+|                      |                      |                       |
+|                      | -   XXLARGE (8       |                       |
+|                      |     vCores)          |                       |
+|                      |                      |                       |
+|                      | -   4XLARGE (16      |                       |
+|                      |     vCores)          |                       |
++----------------------+----------------------+-----------------------+
+| region               | Region of worker     | No                    |
+|                      | clouds; one of the   |                       |
+|                      | following values:    |                       |
+|                      |                      |                       |
+|                      | -   us-east-1        |                       |
+|                      |     (default; US     |                       |
+|                      |     East, N.         |                       |
+|                      |     Virginia)        |                       |
+|                      |                      |                       |
+|                      | -   us-east-2 (US    |                       |
+|                      |     East, Ohio)      |                       |
+|                      |                      |                       |
+|                      | -   us-west-1 (US    |                       |
+|                      |     West, N.         |                       |
+|                      |     California)      |                       |
+|                      |                      |                       |
+|                      | -   us-west-2 (US    |                       |
+|                      |     West, Oregon)    |                       |
+|                      |                      |                       |
+|                      | -   us-gov-west-1    |                       |
+|                      |     (MuleSoft        |                       |
+|                      |     Government       |                       |
+|                      |     Cloud)           |                       |
+|                      |                      |                       |
+|                      | -   eu-central-1     |                       |
+|                      |     (EU, Frankfurt)  |                       |
+|                      |                      |                       |
+|                      | -   eu-west-1 (EU,   |                       |
+|                      |     Ireland)         |                       |
+|                      |                      |                       |
+|                      | -   eu-west-2 (EU,   |                       |
+|                      |     London)          |                       |
+|                      |                      |                       |
+|                      | -   ap-southeast-1   |                       |
+|                      |     (Asia Pacific,   |                       |
+|                      |     Singapore)       |                       |
+|                      |                      |                       |
+|                      | -   ap-southeast-2   |                       |
+|                      |     (Asia Pacific,   |                       |
+|                      |     Sydney)          |                       |
+|                      |                      |                       |
+|                      | -   ap-northeast-1   |                       |
+|                      |     (Asia Pacific,   |                       |
+|                      |     Tokyo)           |                       |
+|                      |                      |                       |
+|                      | -   ca-central-1     |                       |
+|                      |     (Canada,         |                       |
+|                      |     Central)         |                       |
+|                      |                      |                       |
+|                      | -   sa-east-1 (South |                       |
+|                      |     America, São     |                       |
+|                      |     Paulo)           |                       |
++----------------------+----------------------+-----------------------+
+| objectStoreV2        | Enables Object Store | No                    |
+|                      | V2                   |                       |
+|                      | By default, this     |                       |
+|                      | value is set to true |                       |
+|                      | to match the Runtime |                       |
+|                      | Manager              |                       |
+|                      | configuration of     |                       |
+|                      | OSv2.                |                       |
++----------------------+----------------------+-----------------------+
+| persistentQueues     | Enables persistent   | No                    |
+|                      | queues               | mule-runtime::par     |
+|                      | By default, it is    | tial$mmp-concept.adoc |
+|                      | set to false.        | mule-runtime::par     |
+|                      |                      | tial$mmp-concept.adoc |
+|                      |                      | mule-runtime::par     |
+|                      |                      | tial$mmp-concept.adoc |
+|                      |                      | mule-runtime::par     |
+|                      |                      | tial$mmp-concept.adoc |
+|                      |                      | mule-runtime::par     |
+|                      |                      | tial$mmp-concept.adoc |
+|                      |                      | mule-runtime::par     |
+|                      |                      | tial$mmp-concept.adoc |
+|                      |                      | mule-runtime::par     |
+|                      |                      | tial$mmp-concept.adoc |
+|                      |                      | mule-runtime::par     |
+|                      |                      | tial$mmp-concept.adoc |
++----------------------+----------------------+-----------------------+
+| app                  | When set to true,    | No                    |
+| lyLatestRuntimePatch | the plugin instructs |                       |
+|                      | CloudHub to update   |                       |
+|                      | the worker to the    |                       |
+|                      | latest available     |                       |
+|                      | patch for the Mule   |                       |
+|                      | runtime engine       |                       |
+|                      | version specified in |                       |
+|                      | the deployment       |                       |
+|                      | configuration, and   |                       |
+|                      | then deploys the     |                       |
+|                      | application.         |                       |
+|                      | By default, it is    |                       |
+|                      | set to false.        |                       |
++----------------------+----------------------+-----------------------+
+| disableCloudHubLogs  | When set to true,    | No                    |
+|                      | the plugin instructs |                       |
+|                      | CloudHub to disable  |                       |
+|                      | CloudHub logging and |                       |
+|                      | instead use the      |                       |
+|                      | application          |                       |
+|                      | configured in the    |                       |
+|                      | log4j2.xml file.     |                       |
+|                      | By default, it is    |                       |
+|                      | set to false.        |                       |
++----------------------+----------------------+-----------------------+
+
+Encrypt Credentials
+
+mule-runtime::partial$mmp-concept.adoc
+
++
+
+    <plugin>
+      ...
+      <configuration>
+        ...
+        <cloudHubDeployment>
+          ...
+          <server>my.anypoint.credentials</server>
+          ...
+        </cloudHubDeployment>
+        ...
+      </configuration>
+      ...
+    <plugin>
+
++ NOTE: Make sure that the username and password are not set in the
+deployment configuration, or they will overwrite the defined server ID.
+
+See also
+
+-   Mule Maven Plugin
+
+-   Export Resources

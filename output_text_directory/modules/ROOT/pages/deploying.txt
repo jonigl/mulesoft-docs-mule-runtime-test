@@ -1,0 +1,87 @@
+All Mule applications require deployment to a Mule runtime engine
+instance to run. MuleSoft supports three different deployment targets:
+CloudHub, Anypoint Runtime Fabric, and on-premises Mule instances.
+
+When you deploy applications to CloudHub or to Anypoint Runtime Fabric,
+these services automatically manage the Mule runtime engine instances
+needed to run the applications.
+
+If you deploy applications on-premises, the installation of Mule runtime
+engine is required.
+See On-Premises Deployment Model for more information about
+characteristics specific to on-premises deployments.
+
+In addition, different tools are available to deploy applications to
+each of the deployment targets:
+
++----------+----------------------+-----------------------------------+
+| De       | Available Deployment | Mule Runtime Engine Installation  |
+| ployment | Tools                |                                   |
+| Target   |                      |                                   |
++==========+======================+===================================+
+| CloudHub | -   Anypoint Studio  | -   No installation of Mule       |
+|          |                      |     runtime engine is required,   |
+|          | -   Anypoint Runtime |     because CloudHub workers      |
+|          |     Manager          |     start Mule instances as part  |
+|          |                      |     of the deployment process.    |
+|          | -   Anypoint         |                                   |
+|          |     Platform CLI     |                                   |
+|          |                      |                                   |
+|          | -   Mule Maven       |                                   |
+|          |     plugin           |                                   |
++----------+----------------------+-----------------------------------+
+| CloudHub | -   Anypoint Studio  | -   No installation of Mule       |
+| 2.0      |                      |     runtime engine is required,   |
+|          | -   Anypoint Runtime |     because CloudHub 2.0 replicas |
+|          |     Manager          |     start Mule instances as part  |
+|          |                      |     of the deployment process.    |
+|          | -   Anypoint         |                                   |
+|          |     Platform CLI     |                                   |
+|          |                      |                                   |
+|          | -   Mule Maven       |                                   |
+|          |     plugin           |                                   |
++----------+----------------------+-----------------------------------+
+| Anypoint | -   Anypoint Runtime | -   No installation of Mule       |
+| Runtime  |     Manager          |     runtime engine is required,   |
+| Fabric   |                      |     because Anypoint Runtime      |
+|          | -   Runtime Manager  |     Fabric internally starts Mule |
+|          |     in Anypoint      |     instances as part of the      |
+|          |     Platform Private |     deployment process.           |
+|          |     Cloud Edition    |                                   |
+|          |                      | -   Installation of Anypoint      |
+|          | -   Mule Maven       |     Runtime Fabric in your        |
+|          |     plugin           |     desired infrastructure is     |
+|          |                      |     required                      |
++----------+----------------------+-----------------------------------+
+| On-      | -   Anypoint Studio  | -   Installation of Mule runtime  |
+| premises |                      |     engine in your desired        |
+|          | -   Anypoint Runtime |     infrastructure is required.   |
+|          |     Manager          |                                   |
+|          |                      | -   You are responsible for the   |
+|          | -   Runtime Manager  |     installation and              |
+|          |     in Anypoint      |     configuration of your Mule    |
+|          |     Platform Private |     instances.                    |
+|          |     Cloud Edition    |                                   |
+|          |                      |                                   |
+|          | -   Anypoint         |                                   |
+|          |     Platform CLI     |                                   |
+|          |                      |                                   |
+|          | -   Mule Maven       |                                   |
+|          |     plugin           |                                   |
++----------+----------------------+-----------------------------------+
+
+See Also
+
+-   CloudHub
+
+-   CloudHub 2.0
+
+-   Anypoint Runtime Fabric
+
+-   Anypoint Runtime Manager
+
+-   Anypoint Platform Private Cloud Edition
+
+-   Shared Resources
+
+-   Mule High Availability Clusters

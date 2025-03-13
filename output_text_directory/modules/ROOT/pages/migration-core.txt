@@ -1,0 +1,301 @@
+The table below maps Mule 3.x components to their Mule 4 equivalents.
+
++--------------------+-------------------------------------------------+
+| Mule 3.x Component | Mule 4.0 Replacement                            |
++====================+=================================================+
+| All router         | Use Scatter Gather instead or execute the       |
+|                    | operations one after the other with different   |
+|                    | target attributes and then use DW to merge      |
+|                    | results.                                        |
++--------------------+-------------------------------------------------+
+| async[p            | Async processing strategies are no longer       |
+| rocessingStrategy] | needed with the non-blocking execution engine;  |
+|                    | remove all processing strategies from your      |
+|                    | scope when you migrate to Mule 4. Use an Async  |
+|                    | scope wrapping all the components that you want |
+|                    | to execute asynchronously.                      |
++--------------------+-------------------------------------------------+
+| asynchronous-p     | Async processing strategies are no longer       |
+| rocessing-strategy | needed with the non-blocking execution engine;  |
+|                    | remove all processing strategies from your      |
+|                    | scope when you migrate to Mule 4. Use an Async  |
+|                    | scope wrapping all the components that you want |
+|                    | to execute asynchronously.                      |
++--------------------+-------------------------------------------------+
+| bridge             | Build an equivalent flow                        |
++--------------------+-------------------------------------------------+
+| catch-             | Use error-handler with an on-error-continue     |
+| exception-strategy | strategy.                                       |
++--------------------+-------------------------------------------------+
+| choice-            | Use error-handler with different strategies     |
+| exception-strategy | inside using error type selection or when       |
+|                    | attribute.                                      |
++--------------------+-------------------------------------------------+
+| combine-colle      | No longer needed with the simplified message    |
+| ctions-transformer | model. MuleMessageCollections are replaced with |
+|                    | arrays of Mule Messages, which can be merged or |
+|                    | iterated through using any Mule component, such |
+|                    | as DataWeave or foreach.                        |
++--------------------+-------------------------------------------------+
+| component          | Use the Java module.                            |
++--------------------+-------------------------------------------------+
+| composite-source   | Create one flow per each source and invoke a    |
+|                    | private flow using flow-ref for the common      |
+|                    | functionality.                                  |
++--------------------+-------------------------------------------------+
+| configu            | New name is defaultErrorHandler-ref             |
+| ration[defaultExce |                                                 |
+| ptionStrategy-ref] |                                                 |
++--------------------+-------------------------------------------------+
+| configuration[flow | No longer needed with new execution engine.     |
+| EndingWithOneWayEn |                                                 |
+| dpointReturnsNull] |                                                 |
++--------------------+-------------------------------------------------+
+| confi              | Removed.                                        |
+| guration[useExtend |                                                 |
+| edTransformations] |                                                 |
++--------------------+-------------------------------------------------+
+| c                  | Removed.                                        |
+| onfiguration[enric |                                                 |
+| herPropagatesSessi |                                                 |
+| onVariableChanges] |                                                 |
++--------------------+-------------------------------------------------+
+| copy-attachments   | Per the new Message Structure, attachments will |
+|                    | now be part of the message Attributes. You can  |
+|                    | manipulate them at will using DataWeave         |
++--------------------+-------------------------------------------------+
+| copy-properties    | Per the new Message Structure, properties will  |
+|                    | now be part of the message Attributes. You can  |
+|                    | manipulate them at will using DataWeave         |
++--------------------+-------------------------------------------------+
+| custom-agent       | No longer supported.                            |
++--------------------+-------------------------------------------------+
+| custom-aggregator  | Use the Mule SDK to build the custom            |
+|                    | aggregator.                                     |
++--------------------+-------------------------------------------------+
+| custom-connector   | Use the Mule SDK to build your own connector.   |
++--------------------+-------------------------------------------------+
+| custom-            | No longer needed. Use error-handler             |
+| exception-strategy |                                                 |
++--------------------+-------------------------------------------------+
+| custom-lifecyc     | No longer supported.                            |
+| le-adapter-factory |                                                 |
++--------------------+-------------------------------------------------+
+| c                  | Use Object Store connector to create custom     |
+| ustom-object-store | stores.                                         |
++--------------------+-------------------------------------------------+
+| custom-processor   | Use the Mule SDK or the Scripting module        |
+|                    | instead                                         |
++--------------------+-------------------------------------------------+
+| custom-queue-store | Use the new VM Connector.                       |
++--------------------+-------------------------------------------------+
+| cust               | Use the Mule SDK to build a custom router.      |
+| om-router-resolver |                                                 |
++--------------------+-------------------------------------------------+
+| custom-router      | Use the Mule SDK to build a custom router.      |
++--------------------+-------------------------------------------------+
+| custom-service     | Use flows.                                      |
++--------------------+-------------------------------------------------+
+| custom-source      | Use the Mule SDK to write a new event source.   |
++--------------------+-------------------------------------------------+
+| custom-splitter    | Use DataWeave or the Mule SDK.                  |
++--------------------+-------------------------------------------------+
+| custom-t           | Use the <bti:transaction-manager/>.             |
+| ransaction-manager |                                                 |
++--------------------+-------------------------------------------------+
+| custom-transaction | No longer supported.                            |
++--------------------+-------------------------------------------------+
+| default-           | Use error-handler with an on-error-propagate    |
+| exception-strategy | strategy.                                       |
++--------------------+-------------------------------------------------+
+| default-in-        | Use the new VM Connector.                       |
+| memory-queue-store |                                                 |
++--------------------+-------------------------------------------------+
+| default-pers       | Use the new VM Connector.                       |
+| istent-queue-store |                                                 |
++--------------------+-------------------------------------------------+
+| default-service-   | Use error-handler with an on-error-propagate    |
+| exception-strategy | strategy.                                       |
++--------------------+-------------------------------------------------+
+| endpoint           | Use connectors.                                 |
++--------------------+-------------------------------------------------+
+| exception-strategy | Use error-handler.                              |
++--------------------+-------------------------------------------------+
+| ex                 | Depending on the nature of your expression, you |
+| pression-component | can either use DataWeave (for data access       |
+|                    | expressions), Scripting module or the Mule SDK  |
+|                    | for algorithmic expressions, or the Java module |
+|                    | for expressions which simply access Java.       |
++--------------------+-------------------------------------------------+
+| file-queue-store   | Use the new VM Connector.                       |
++--------------------+-------------------------------------------------+
+| flow[p             | Removed. Non-blocking execution engine ensures  |
+| rocessingStrategy] | that users do not need to tune this.            |
++--------------------+-------------------------------------------------+
+| idempot            | Replaced by idempotent-message-validator.       |
+| ent-message-filter |                                                 |
++--------------------+-------------------------------------------------+
+| idempotent         | New name is redelivery-policy.                  |
+| -redelivery-policy |                                                 |
++--------------------+-------------------------------------------------+
+| i                  | Replaced by idempotent-message-validator.       |
+| dempotent-secure-h |                                                 |
+| ash-message-filter |                                                 |
++--------------------+-------------------------------------------------+
+| in-memory-store    | Use Object Store connector to create custom     |
+|                    | stores.                                         |
++--------------------+-------------------------------------------------+
+| inbound-endpoint   | Use the event sources or triggers defined on    |
+|                    | each connector or module.                       |
++--------------------+-------------------------------------------------+
+| i                  | Use the Java module.                            |
+| nclude-entry-point |                                                 |
++--------------------+-------------------------------------------------+
+| interceptor-stack  | Removed. Use custom policies.                   |
++--------------------+-------------------------------------------------+
+| invoke             | Use the Java module                             |
++--------------------+-------------------------------------------------+
+| jndi-t             | Use the <bti:transaction-manager/>.             |
+| ransaction-manager |                                                 |
++--------------------+-------------------------------------------------+
+| jrun-t             | Use the <bti:transaction-manager/>.             |
+| ransaction-manager |                                                 |
++--------------------+-------------------------------------------------+
+| legacy-abstract-   | Use the new error-handler                       |
+| exception-strategy |                                                 |
++--------------------+-------------------------------------------------+
+| managed-store      | Use Object Store connector to create custom     |
+|                    | stores.                                         |
++--------------------+-------------------------------------------------+
+| message-prop       | Use Transform component and DataWeave.          |
+| erties-transformer |                                                 |
++--------------------+-------------------------------------------------+
+| model              | Removed. Use flows instead.                     |
++--------------------+-------------------------------------------------+
+| mule[version]      |                                                 |
++--------------------+-------------------------------------------------+
+| outbound-endpoint  | Element moved from the core namespace to the    |
+|                    | new transports namespace.                       |
++--------------------+-------------------------------------------------+
+| poll → watermark   | This capability has been built inside event     |
+|                    | sources from many connectors, like Salesforce,  |
+|                    | Database, SFTP, File, etc. You can also use the |
+|                    | object-store connector to manually set the      |
+|                    | watermark values.                               |
++--------------------+-------------------------------------------------+
+| poll               | Replaced with scheduler component.              |
++--------------------+-------------------------------------------------+
+| processor          | Depending on the nature of your expression, you |
+|                    | can either use DataWeave (for data access       |
+|                    | expressions), Scripting module or the Mule SDK  |
+|                    | for algorithmic expressions, or the Java module |
+|                    | for expressions which simply access Java.       |
++--------------------+-------------------------------------------------+
+| prototype-object   | Use Java module or Spring module.               |
++--------------------+-------------------------------------------------+
+| queue-profile      | Use the VM Connector.                           |
++--------------------+-------------------------------------------------+
+| queue-store        | VM Connector.                                   |
++--------------------+-------------------------------------------------+
+| recipient-list     | Removed.                                        |
++--------------------+-------------------------------------------------+
+| reconne            | Removed.                                        |
+| ct-custom-notifier |                                                 |
++--------------------+-------------------------------------------------+
+| reconne            | Removed.                                        |
+| ct-custom-strategy |                                                 |
++--------------------+-------------------------------------------------+
+| reconnect-notifier | Removed.                                        |
++--------------------+-------------------------------------------------+
+| remove-attachment  | No longer needed per the new Message Structure, |
+|                    | attachments                                     |
++--------------------+-------------------------------------------------+
+| remove-property    | PNo longer needed per the new Message           |
+|                    | Structure, attachments                          |
++--------------------+-------------------------------------------------+
+| response           | No longer needed.                               |
++--------------------+-------------------------------------------------+
+| request-reply      | Mule 4 will not longer support request-reply    |
+|                    | for all connectors. Connectors that had a       |
+|                    | “request-reply” behavior will provide a         |
+|                    | “request-reply” operation built in, such as the |
+|                    | JMS publish-consume operation.                  |
++--------------------+-------------------------------------------------+
+| resin-t            | Removed.                                        |
+| ransaction-manager |                                                 |
++--------------------+-------------------------------------------------+
+| rollback-          | Use error-handler with an on-error-propagate    |
+| exception-strategy | strategy.                                       |
++--------------------+-------------------------------------------------+
+| scatter-gather[    | No longer needed now that Mule 4 is non         |
+| threading-profile] | blocking.                                       |
++--------------------+-------------------------------------------------+
+| seda-model         | No more SEDA queues in Mule 4. The execution    |
+|                    | engine in Mule 4 is non-blocking.               |
++--------------------+-------------------------------------------------+
+| service            | Use flows.                                      |
++--------------------+-------------------------------------------------+
+| set-attachment     | No longer needed. Attachments can be stored as  |
+|                    | variables.                                      |
++--------------------+-------------------------------------------------+
+| set-property       | Properties no longer exist in the new message   |
+|                    | model. You can store attributes from the Mule   |
+|                    | message in a variable.                          |
++--------------------+-------------------------------------------------+
+| se                 | Session variables have been removed. Users must |
+| t-session-variable | explicitly pass headers across transport        |
+|                    | boundaries.                                     |
++--------------------+-------------------------------------------------+
+| simple-in-         | Use the new VM Connector.                       |
+| memory-queue-store |                                                 |
++--------------------+-------------------------------------------------+
+| simple-service     | Use flows.                                      |
++--------------------+-------------------------------------------------+
+| simp               | Use object store module extension to create     |
+| le-text-file-store | custom stores.                                  |
++--------------------+-------------------------------------------------+
+| singleton-object   | Use Java module or Spring module.               |
++--------------------+-------------------------------------------------+
+| spring-object      | Use Java module or Spring module.               |
++--------------------+-------------------------------------------------+
+| synchronous-p      | The behavior related to flow components         |
+| rocessing-strategy | execution is the same as flows in 4.x but it    |
+|                    | doesn’t always execute in the same thread as in |
+|                    | 3.x.                                            |
++--------------------+-------------------------------------------------+
+| transactional      | Replaced with “try” scope.                      |
+| scope              |                                                 |
++--------------------+-------------------------------------------------+
+| userna             | Removed.                                        |
+| me-password-filter |                                                 |
++--------------------+-------------------------------------------------+
+| validator          | Removed.                                        |
++--------------------+-------------------------------------------------+
+| weblogic-t         | Use the <bti:transaction-manager/>.             |
+| ransaction-manager |                                                 |
++--------------------+-------------------------------------------------+
+| websphere-t        | Use the <bti:transaction-manager/>.             |
+| ransaction-manager |                                                 |
++--------------------+-------------------------------------------------+
+| all-strategy       | Removed.                                        |
++--------------------+-------------------------------------------------+
+| en                 | Use the Java module.                            |
+| try-point-resolver |                                                 |
++--------------------+-------------------------------------------------+
+| filter             | Filters are replaced by the Validation module.  |
++--------------------+-------------------------------------------------+
+| interceptor        | Interceptors are replaced with custom policies. |
++--------------------+-------------------------------------------------+
+| me                 | No longer needed                                |
+| ssage-info-mapping |                                                 |
++--------------------+-------------------------------------------------+
+| point-resolver-set | Use the Use the Java module.                    |
++--------------------+-------------------------------------------------+
+| router             | Removed.                                        |
++--------------------+-------------------------------------------------+
+| threading-profile  | No longer needed. The Runtime now tunes itself. |
++--------------------+-------------------------------------------------+
+| transformer        | Removed. Most explicit transformations are no   |
+|                    | longer needed. Use DataWeave for the corner     |
+|                    | cases.                                          |
++--------------------+-------------------------------------------------+

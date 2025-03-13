@@ -1,0 +1,204 @@
+-   Develop Mule Applications
+
+    -   Tutorial: Create a "Hello World" Mule app
+
+    -   Tutorial: Create a Mule app that uses the Database Connector and
+        DataWeave
+
+    -   Core Components
+
+        -   Async Scope
+
+        -   batch-processing-concept.xml
+
+            -   batch-phases.xml
+
+            -   batch-filters-and-batch-aggregator.xml
+
+            -   batch-job-instance-id.xml
+
+            -   batch-error-handling-faq.xml
+
+            -   batch-reference.xml
+
+        -   Cache Scope
+
+            -   Configure the Cache Scope
+
+            -   Set Up a Caching Strategy
+
+            -   Invalidate Cache Entries
+
+        -   Choice Router
+
+        -   Custom Business Event Component
+
+        -   Dynamic Evaluate Component
+
+        -   First Successful Router
+
+        -   Flow and Subflow Scopes
+
+        -   Flow Reference Component
+
+        -   For Each Scope
+
+        -   Idempotent Message Validator
+
+        -   Logger Component
+
+        -   On-Error Components
+
+        -   Parallel For Each Scope
+
+        -   Parse Template Component
+
+        -   Raise Error Component
+
+        -   Round Robin Router
+
+        -   Remove Variable Transformer
+
+        -   Scheduler Endpoint (Trigger)
+
+        -   Scatter-Gather Router
+
+        -   Set Payload Transformer
+
+        -   Set Transaction Id Component
+
+        -   Set Variable Transformer
+
+        -   Transform Message Component
+
+            -   Workflow: Create a Mapping in Anypoint Studio
+
+                -   Define Input and Output Structure of a
+                    Transformation
+
+                -   Graphically Construct a Mapping
+
+                -   Preview the Output of a Transformation
+
+                -   Tips: Transform Message Component UI
+
+                -   Change the Target Output of a Transformation
+
+                -   Add Another Output Target
+
+                -   Move Transformations to Separate Files
+
+            -   Workflow: Create a Mapping in Design Center
+
+                -   Define Input and Output Structure of a
+                    Transformation
+
+                -   Graphically Construct a Mapping
+
+                -   Preview the Output of a Transformation
+
+            -   Output a Transformation to an Attribute or Variable
+
+            -   Transform XML Reference
+
+        -   Try Scope
+
+            -   Try Scope XML Reference
+
+        -   Until Successful Scope
+
+    -   Build an Application from an API
+
+    -   Build an HTTPS Service
+
+    -   Configure Global Elements
+
+    -   Configure Global Settings
+
+    -   Configure Properties
+
+        -   Configure Property Placeholders
+
+        -   Use System Properties
+
+        -   Create a Custom Configuration Properties Provider
+
+        -   Configure Environment Properties
+
+    -   Enrich Data with Target Variables
+
+    -   Configure Shared Resources
+
+    -   Export Resources
+
+    -   Set Environment Variables
+
+    -   Configure Reconnection Strategies
+
+    -   Configure a Redelivery Policy
+
+    -   Configure Streaming Strategies
+
+        -   Streaming Strategies Reference
+
+    -   Consume Data from an API
+
+        -   REST API Example
+
+    -   Configure Custom Serializers
+
+    -   Configure Error Handlers
+
+    -   Store Application Data Using Object Stores
+
+    -   Configure Logging and Debug Applications
+
+        -   Configure Logging
+
+        -   Configure MDC Logging
+
+        -   Enable Verbose Logging
+
+        -   Debug Outside Studio
+
+        -   Configure Mule Stack Traces
+
+    -   Configure Mule Notifications
+
+        -   Mule Notifications Reference
+
+    -   Configure Feature Flags
+
+    -   Test Mule Applications
+
+        -   Performance Tests
+
+    -   Common Development Strategies and Best Practices
+
+        -   Create Reproducible Builds
+
+        -   Implement Reliability Patterns
+
+        -   Implement Transaction Management
+
+            -   Single Resource Transactions
+
+            -   XA Transactions
+
+            -   Use Bitronix to Manage Transactions
+
+        -   Modularize Configuration Files
+
+        -   Share Applications
+
+        -   Implement Continuous Integration
+
+        -   Implement Orchestration Using Mule
+
+        -   Implement Enterprise Integration Patterns
+
+        -   Business Event Tracking
+
+            -   Configure Default Events Tracking
+
+        -   Best Practices to Build Mule Apps

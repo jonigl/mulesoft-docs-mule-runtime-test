@@ -1,0 +1,17 @@
+mule-runtime::partial$dataweave-intro.adoc
+
+-   To get started with DataWeave 2.4.0 for Mule runtime engine (Mule)
+    version 4.4 and later, visit the quickstart.
+
+-   To learn more about DataWeave, visit the language guide.
+
+-   To look up reference information about DataWeave 2.4.0 operators and
+    functions, visit the reference guide.
+
+Compatibility
+
+release-notes::partial$dataweave/dw-mule-compatibility.adoc
+
+See Also
+
+-   Dataweave

@@ -1,0 +1,107 @@
+A redelivery policy is a filter that helps you conserve resources by
+limiting the number of times the Mule runtime engine (Mule) executes
+messages that generate errors. You can add a redelivery policy to any
+source in a flow.
+
+When you add a redelivery policy to a flow’s source, Mule evaluates the
+received data before it executes the flow’s components. If a message
+delivery fails a specified number of times, the redelivery policy
+prevents the flow from processing the received data and raises a
+REDELIVERY_EXHAUSTED error.
+
+Redelivery Policy Configuration Parameters
+
++----------+----------+----------+-----------------------------------+
+| Field    | Type     | Default  | Description                       |
+|          |          | Value    |                                   |
++==========+==========+==========+===================================+
+| Max      | Number   | 5        | Maximum number of times that a    |
+| Re       |          |          | message can be redelivered to the |
+| delivery |          |          | flow and processed unsuccessfully |
+| Count    |          |          | before raising a                  |
+|          |          |          | MULE:REDELIVERY_EXHAUSTED error.  |
++----------+----------+----------+-----------------------------------+
+| Use      | Boolean  | True     | Indicates whether to use a secure |
+| Secure   |          |          | hash algorithm to identify a      |
+| Hash     |          |          | redelivered message.              |
++----------+----------+----------+-----------------------------------+
+| Message  | String   | SHA-256  | Secure hashing algorithm to use   |
+| Digest   |          |          | for the message. If the payload   |
+| A        |          |          | of the message is a Java object,  |
+| lgorithm |          |          | Mule ignores the Message Digest   |
+|          |          |          | Algorithm value and returns the   |
+|          |          |          | value that the payload’s          |
+|          |          |          | hashCode() returned.              |
++----------+----------+----------+-----------------------------------+
+| ID       | Ex       | -        | Defines one or more expressions   |
+| Ex       | pression |          | that determine when a message has |
+| pression |          |          | been redelivered. This property   |
+|          |          |          | can be set only if the value of   |
+|          |          |          | Use Secure Hash is False.         |
++----------+----------+----------+-----------------------------------+
+| Object   | String   | Object   | Object Store in which the         |
+| Store    |          | Store    | redelivery counter for each       |
+|          |          | created  | message is stored. You can        |
+|          |          | by       | configure the Object Store as a   |
+|          |          | Mule’s   | reference or an inner element.    |
+|          |          | default  |                                   |
+|          |          | Obj      | For information, see the Object   |
+|          |          | ectStore | Store connector documentation.    |
+|          |          | Manager. |                                   |
+|          |          | Nonper   |                                   |
+|          |          | sistent, |                                   |
+|          |          | with an  |                                   |
+|          |          | entryTtl |                                   |
+|          |          | of 300   |                                   |
+|          |          | seconds  |                                   |
+|          |          | and an   |                                   |
+|          |          | ex       |                                   |
+|          |          | piration |                                   |
+|          |          | Interval |                                   |
+|          |          | of 6     |                                   |
+|          |          | seconds. |                                   |
++----------+----------+----------+-----------------------------------+
+
+How the Redelivery Policy Works
+
+Each time the source receives a new message, Mule identifies the message
+by generating its key.
+
+-   If the processing flow causes an exception, Mule increments the
+    counter associated with the message key. When the counter reaches a
+    value greater than the configured maxRedeliveryCount value, Mule
+    throws a MULE:REDELIVERY_EXHAUSTED error.
+
+-   If the processing flow does not cause an exception, its counter is
+    reset.
+
+Errors
+
+-   MULE:REDELIVERY_EXHAUSTED
+
+    Thrown when the number of executions that raise an error is greater
+    than the configured maxRedeliveryCount value.
+
+Example
+
+In this example, Mule logs an error with a
+Redelivery exhausted in http listener message when the
+maxRedeliveryCount of 2 is exceeded:
+
+    <flow name="logOnRedeliveryExhausted">
+        <http:listener path="test" config-ref="listenerConfig">
+            <redelivery-policy maxRedeliveryCount="2" useSecureHash="true"/>
+        </http:listener>
+        <flow-ref name="processData"/>
+        <error-handler>
+            <on-error-continue type="MULE:REDELIVERY_EXHAUSTED">
+                <logger message="Redelivery exhausted in http listener" level="ERROR"/>
+            </on-error-continue>
+        </error-handler>
+    </flow>
+
+See Also
+
+-   Mule Overview
+
+-   Flow and Subflow Scopes

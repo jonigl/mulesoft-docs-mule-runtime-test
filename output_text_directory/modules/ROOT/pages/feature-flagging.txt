@@ -1,0 +1,1021 @@
+Mule runtime engine incorporates a feature flagging mechanism that
+enables Mule applications to change the behavior of the Mule instance
+depending on the required minimum Mule version. This feature ensures
+backward compatibility because it allows Mule applications to continue
+working on later Mule runtime versions, while new Mule applications can
+benefit from the latest bug fixes implemented in the Mule instance.
+
+The feature flagging mechanism is automatic. For each Mule application
+deployed to a Mule instance, Mule determines which features are enabled
+or disabled based on the application’s minimum Mule version configured
+in the application descriptor file (mule-artifact.json) of the Mule app.
+
+By default, Mule runtime engine disables any new features or bug fixes
+that aren’t backward compatible with Mule applications running in
+earlier Mule versions. However, it is possible to manage the feature
+flags configured for each Mule application or all applications running
+in the same Mule instance.
+
+Configure Feature Flags for a Mule Application
+
+To configure feature flags for a Mule application, change the
+minMuleVersion value in the mule-artifact.json file of your app. This
+configuration instructs the Mule instance to run this application
+implementing all features and bug fixes that were released to that
+particular version and disabling features and bug fixes that are active
+by default in later Mule versions.
+
+For example, you can run a Mule application in Mule 4.5.0 instructing
+the Mule instance to apply only the features that don’t change core
+functionality up to Mule 4.1.0:
+
+Example mule-artifact.json file
+
+    {
+      "minMuleVersion": "4.1.0"
+    }
+
+Configure Feature Flags for the Mule Instance
+
+An alternative way to configure feature flags is by using system
+properties. In this case, you can enable or disable each one of the
+available feature flags. However, configuring feature flags through
+system properties applies the changes at the Mule instance level, so all
+applications deployed to this Mule instance behave according to the
+configured feature flags.
+
+Note that this configuration is compatible with on-premise deployments
+only because you cannot configure system properties in other deployment
+targets.
+
+For example, you can configure a Mule 4.5.0 instance to enable and
+disable specific features for all applications running on this instance:
+
+Example wrapper.conf file
+
+    …
+    wrapper.java.additional.999=-DHONOUR_RESERVED_PROPERTIES_PROPERTY=true
+    wrapper.java.additional.1000=-DCOMPUTE_CONNECTION_ERRORS_IN_STATS_PROPERTY=false
+
+Feature Flags Reference
+
+The following table shows the available feature flags, a description of
+their functionality, the Mule version in which the flag became
+available, the earlier minor version releases that enable the flag by
+default, and the issue ID in which the change was implemented:
+
++-----------------------------------+-----------------------------------+
+| Feature Flag                      | Description                       |
++===================================+===================================+
+| mule.batch.fixed.agg              | When enabled, batch aggregators   |
+| regator.transaction.record.buffer | with fixed size aggregators       |
+|                                   | commit only when a full block is  |
+|                                   | processed.                        |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | -   4.3.0-20210304                |
+|                                   |                                   |
+|                                   | -   4.2.2-20210304                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   Not enabled by default in any |
+|                                   |     Mule version                  |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19218                    |
++-----------------------------------+-----------------------------------+
+| mule.c                            | When enabled, connection errors   |
+| ompute.connection.errors.in.stats | are computed as part of alerts    |
+|                                   | triggering.                       |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | -   4.3.0-20210304                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19020                    |
++-----------------------------------+-----------------------------------+
+| mule.enable.default.error         | When enabled, the default error   |
+| handler.not.rollback.incorrect.tx | handler added by the Runtime      |
+|                                   | doesn’t roll back a transaction   |
+|                                   | if it doesn’t correspond to have  |
+|                                   | this roll back made.              |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0-20211227                |
+|                                   |                                   |
+|                                   | -   4.3.0-20211222                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.1                         |
+|                                   |                                   |
+|                                   | -   4.3.1                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19919                    |
++-----------------------------------+-----------------------------------+
+| mule.d                            | When enabled, DataWeave removes   |
+| w.remove_shadowed_implicit_inputs | implicit inputs when a variable   |
+|                                   | with the same name is declared at |
+|                                   | the root level.                   |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0-20211026                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   DW-893                        |
++-----------------------------------+-----------------------------------+
+| mule.enable.policy.isolation      | When enabled, Mule manages        |
+|                                   | extensions imported by a policy   |
+|                                   | in complete isolation from the    |
+|                                   | extensions imported by the Mule   |
+|                                   | application. Also, validations    |
+|                                   | prevent the use of explicit       |
+|                                   | configurations that the           |
+|                                   | application declared as part of   |
+|                                   | the policy initialization.        |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | -   4.3.0-20210622                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19226                    |
++-----------------------------------+-----------------------------------+
+| mule.enable.profiling.service     | When enabled, the Runtime         |
+|                                   | profiling capabilities become     |
+|                                   | available.                        |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   Not enabled by default in any |
+|                                   |     Mule version.                 |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19588                    |
++-----------------------------------+-----------------------------------+
+| mul                               | When enabled, the Mule XML DSL    |
+| e.entityResolver.failOnFirstError | parser fails when deploying an    |
+|                                   | application that declares a       |
+|                                   | schema that cannot be located.    |
+|                                   | Otherwise, the parser fails if    |
+|                                   | the application also makes use of |
+|                                   | the namespace to which such a     |
+|                                   | schema is bound.                  |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   EE-7827                       |
++-----------------------------------+-----------------------------------+
+| mule.force.runti                  | When enabled, profiling consumers |
+| me.profiling.consumers.enablement | implemented by the Runtime are    |
+|                                   | enabled by default.               |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0-20220221                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   Not enabled by default in any |
+|                                   |     Mule version                  |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19967                    |
++-----------------------------------+-----------------------------------+
+| mule.dw.handle_splitter_exception | When enabled, DataWeave correctly |
+|                                   | handles internal exceptions while |
+|                                   | splitting a payload, preventing   |
+|                                   | subsequent serialization errors.  |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   DW-383                        |
++-----------------------------------+-----------------------------------+
+| mule.honour.reserved.properties   | When enabled, reserved properties |
+|                                   | such as app.name can’t be         |
+|                                   | overridden by global properties   |
+|                                   | (overrides are ignored).          |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | -   4.3.0-20220221                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | -   4.3.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-17659                    |
++-----------------------------------+-----------------------------------+
+| mule.honourErrorMap               | When enabled, the operation       |
+| pingsWhenPolicyAppliedOnOperation | policy’s error resolution is      |
+|                                   | ignored. Therefore, the error     |
+|                                   | mappings of the processor on      |
+|                                   | which the policy is applied are   |
+|                                   | set successfully.                 |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0-20220722                |
+|                                   |                                   |
+|                                   | -   4.3.0-20220725                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-11147961                    |
++-----------------------------------+-----------------------------------+
+| mule.det                          | When enabled,                     |
+| ailedCompositeRoutingExceptionLog | AbstractForkJoinRouter-based      |
+|                                   | processors, such as Parallel For  |
+|                                   | Each and Scatter-Gather routers,  |
+|                                   | now show detailed error           |
+|                                   | information for their failed      |
+|                                   | routes.                           |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0-20220622                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-10965130                    |
++-----------------------------------+-----------------------------------+
+| mu                                | When enabled, if the items to     |
+| le.parallelForeach.flattenMessage | iterate over on a                 |
+|                                   | parallel-foreach scope are        |
+|                                   | messages (such as the output of   |
+|                                   | an operation that returns Result  |
+|                                   | objects), they are flattened in a |
+|                                   | way that is consistent with what  |
+|                                   | the foreach scope does.           |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0-20220221                |
+|                                   |                                   |
+|                                   | -   4.3.0-20220221                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-20067                    |
++-----------------------------------+-----------------------------------+
+| mule.setVariable.WithNullValue    | When enabled, the Set Variable    |
+|                                   | component creates a variable even |
+|                                   | if its value is null.             |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | -   4.3.0-20210622                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19443                    |
++-----------------------------------+-----------------------------------+
+| mule.startExtension               | When enabled, extensions are only |
+| ComponentsWithArtifactClassloader | able to load exported resources   |
+|                                   | from the deployable artifacts     |
+|                                   | (application, policy, domain).    |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | -   4.3.0-20211026                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19815                    |
++-----------------------------------+-----------------------------------+
+| mule.transformer.t                | When enabled, managed cursor      |
+| oString.transformIteratorElements | iterators transformed to strings  |
+|                                   | show the representation of the    |
+|                                   | elements instead of generic value |
+|                                   | org                               |
+|                                   | .mule.runtime.core.internal.strea |
+|                                   | ming.object.-ManagedCursorIterato |
+|                                   | rProvider$ManagedCursorIterator@. |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19323                    |
++-----------------------------------+-----------------------------------+
+| mule.suppress.mule.exceptions     | When enabled, error suppression   |
+|                                   | occurs. This feature prevents     |
+|                                   | components such as the Web        |
+|                                   | Service Consumer connector and    |
+|                                   | the Until Successful scope from   |
+|                                   | reporting errors outside their    |
+|                                   | namespaces.                       |
+|                                   |                                   |
+|                                   | Example of an error log extract   |
+|                                   | for a connectivity error at the   |
+|                                   | Web Service Consumer              |
+|                                   | (HTTP:CONNECTIVITY is being       |
+|                                   | suppressed):                      |
+|                                   |                                   |
+|                                   |     Error type : WSC:INVALID_WSDL |
+|                                   |                                   |
+|                                   |    Caused by  : HTTP:CONNECTIVITY |
+|                                   |                                   |
+|                                   | Suppressed errors are treated as  |
+|                                   | underlying causes that can also   |
+|                                   | be matched by On Error handlers.  |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0-20220922                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.4.0-20220922                |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-11778765                    |
++-----------------------------------+-----------------------------------+
+| mule.errorTypes.lax               | When enabled, error types         |
+|                                   | validations are enforced even for |
+|                                   | error handlers/components that    |
+|                                   | aren’t referenced.                |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0-20211227                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   Not enabled by default in any |
+|                                   |     Mule version.                 |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19879                    |
++-----------------------------------+-----------------------------------+
+| mule.su                           | When enabled, if an application   |
+| pport.native.library.dependencies | accesses a native library, the    |
+|                                   | rest of its declared native       |
+|                                   | libraries are also loaded. This   |
+|                                   | prevents errors like              |
+|                                   | UnsatisfiedLinkError when the     |
+|                                   | accessed native library depends   |
+|                                   | on another native library.        |
+|                                   | Libraries must be declared at the |
+|                                   | sharedLibraries configuration     |
+|                                   | following the dependency order,   |
+|                                   | meaning that if library A depends |
+|                                   | on library B, then A must be      |
+|                                   | declared first. Declaring the     |
+|                                   | native libraries at a domain is   |
+|                                   | also supported.                   |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0-20230417                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-11855052                    |
++-----------------------------------+-----------------------------------+
+| mule.rethrowExcep                 | When enabled, internal exceptions |
+| tionsInIdempotentMessageValidator | are rethrown instead of throwing  |
+|                                   | a general MULE:DUPLICATE_MESSAGE  |
+|                                   | when processing an event in the   |
+|                                   | idempotent-message-validator.     |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-11529823                    |
++-----------------------------------+-----------------------------------+
+| com.mulesoft.dw.xml_r             | When this property is set to      |
+| eader.honourMixedContentStructure | true, DataWeave retains a         |
+|                                   | mixed-content structure instead   |
+|                                   | of grouping text with mixed       |
+|                                   | content into a single text field. |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-11071481                    |
++-----------------------------------+-----------------------------------+
+| ENFORCE_ERROR_TYPES_VALIDATION    | When enabled, error types         |
+|                                   | validations are enforced, even    |
+|                                   | for error handlers/components     |
+|                                   | that aren’t being referenced.     |
+|                                   | This feature isn’t configurable   |
+|                                   | by system property.               |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-10619787                    |
++-----------------------------------+-----------------------------------+
+| disable.attrib                    | When enabled, Mule trims          |
+| ute.parameter.whitespace.trimming | whitespaces from parameter values |
+|                                   | defined at the attribute level in |
+|                                   | the DSL.                          |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19803                    |
++-----------------------------------+-----------------------------------+
+| disable.pojo.t                    | When enabled, Mule trims          |
+| ext.parameter.whitespace.trimming | whitespaces from CDATA text       |
+|                                   | parameter of pojos in the DSL.    |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-20048                    |
++-----------------------------------+-----------------------------------+
+| enforce.expression.validation     | When enabled, expression          |
+|                                   | validations are enforced for      |
+|                                   | targetValue, not allowing a       |
+|                                   | literal value.                    |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19987                    |
++-----------------------------------+-----------------------------------+
+| enforce.dw.expression.validation  | When enabled, expression          |
+|                                   | validations are enforced for all  |
+|                                   | DataWeave expressions.            |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19967                    |
++-----------------------------------+-----------------------------------+
+| force.runti                       | When enabled, profiling consumers |
+| me.profiling.consumers.enablement | implemented by Mule are enabled   |
+|                                   | by default.                       |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0-202202                  |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-19967                    |
++-----------------------------------+-----------------------------------+
+| mule.disable                      | When enabled, optional attribute  |
+| .registryBootstrapOptionalEntries | in entries in a                   |
+|                                   | registry-bootstrap.properties are |
+|                                   | ignored.                          |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Deprecated Since                  |
+|                                   |                                   |
+|                                   | -   4.9.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-10736301                    |
++-----------------------------------+-----------------------------------+
+| mule.disable.applyObjectProcessor | When enabled,                     |
+|                                   | org.mule.runtime.core.pr          |
+|                                   | ivileged.registry.ObjectProcessor |
+|                                   | implementations aren’t applied on |
+|                                   | objects registered into the       |
+|                                   | SimpleRegistry.                   |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   MULE-11737                    |
++-----------------------------------+-----------------------------------+
+| mule.deployment.vali              | When enabled, the application     |
+| dateAppModelWithRegionClassloader | model is validated with the       |
+|                                   | region classloader. When          |
+|                                   | disabled, it is validated with    |
+|                                   | the application classloader.      |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-10808757                    |
++-----------------------------------+-----------------------------------+
+| mule.suppress.mule.exceptions     | When enabled, error suppression   |
+|                                   | happens. This affects, for        |
+|                                   | example, the Web Service Consumer |
+|                                   | connector and the Until           |
+|                                   | Successful scope that always      |
+|                                   | reports errors from their         |
+|                                   | corresponding namespaces (MULE    |
+|                                   | and WSC). Suppressed errors are   |
+|                                   | treated as underlying causes.     |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0-202210                  |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0-202210                  |
+|                                   |                                   |
+|                                   | -   4.3.0-202210                  |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-11308645                    |
++-----------------------------------+-----------------------------------+
+| mule.f                            | When enabled, the 'foreach'       |
+| oreachRouterRejectsMapExpressions | router generates an               |
+|                                   | IllegalArgumentException if the   |
+|                                   | collection expression evaluates   |
+|                                   | to a java.util.Map.               |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-12207110                    |
++-----------------------------------+-----------------------------------+
+| mule.                             | When enabled, the insecure TLS    |
+| honour.insecure.tls.configuration | configuration is honored even if  |
+|                                   | there are fields of the           |
+|                                   | TrustStore configured.            |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-10822938                    |
++-----------------------------------+-----------------------------------+
+| mule.transaction.sink.index       | When enabled, flux sinks are      |
+|                                   | cached using index as part of the |
+|                                   | key. If a sink is already in use, |
+|                                   | a new sink is created.            |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0                         |
+|                                   |                                   |
+|                                   | -   4.3.0                         |
+|                                   |                                   |
+|                                   | -   4.2.0                         |
+|                                   |                                   |
+|                                   | -   4.1.0                         |
+|                                   |                                   |
+|                                   | -   4.0.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-12128703                    |
++-----------------------------------+-----------------------------------+
+| mule.enab                         | When enabled, a new (Source)      |
+| le.policy.context.parallel.scopes | Policy Context is created for the |
+|                                   | execution of parallel scopes:     |
+|                                   | ParallelForeach, ScatterGather,   |
+|                                   | and Async.                        |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | -   4.4.0-202306                  |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-13509911                    |
++-----------------------------------+-----------------------------------+
+| mul                               | When enabled, the trace ID and    |
+| e.put.trace.id.and.span.id.in.mdc | span ID are added to the MDC when |
+|                                   | available.                        |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-12979787                    |
++-----------------------------------+-----------------------------------+
+| mule.enable.                      | When enabled, the                 |
+| mule.specific.tracing.information | ancestor-mule-span-id value is    |
+|                                   | added in the trace state when a   |
+|                                   | span is propagated.               |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.5.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   Not enabled by default in any |
+|                                   |     Mule version                  |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-13215870                    |
++-----------------------------------+-----------------------------------+
+| mule.disableJmx.for.commons.pool2 | When enabled, MBeans isn’t        |
+|                                   | registered for commons-pool2.     |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.6.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.6.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-12422473                    |
++-----------------------------------+-----------------------------------+
+| mule.disable.scheduler.logging    | When enabled, the Scheduler       |
+|                                   | doesn’t log exceptions.           |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.6.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.6.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-13881167                    |
++-----------------------------------+-----------------------------------+
+| mule.tx.error.when.timeout        | When enabled, an error is thrown  |
+|                                   | when a local or XA transaction    |
+|                                   | reach timeout. This error can be  |
+|                                   | handled using error handling.     |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.6.1                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.6.1                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-14608096                    |
++-----------------------------------+-----------------------------------+
+| mule.disableXm                    | When enabled, implicit            |
+| lSdkImplicitConfigurationCreation | configuration for the XML SDK     |
+|                                   | isn’t created.                    |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.7.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.7.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-10634129                    |
++-----------------------------------+-----------------------------------+
+| mule.enable.xml.sdk.mdc.reset     | When enabled, the MDC context     |
+|                                   | resets after XML SDK operation is |
+|                                   | executed.                         |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.8.0                         |
+|                                   |                                   |
+|                                   | -   4.7.1                         |
+|                                   |                                   |
+|                                   | -   4.6.4                         |
+|                                   |                                   |
+|                                   | -   4.4.0-20240522                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.8.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-15206528                    |
++-----------------------------------+-----------------------------------+
+| mule.un                           | When enabled,                     |
+| supportedExtensionsClientRunAsync | org.mule.runtime.exte             |
+|                                   | nsion.api.client.ExtensionsClient |
+|                                   | deprecated methods                |
+|                                   | (executeAsync(Str                 |
+|                                   | ing, String, OperationParameters) |
+|                                   | and                               |
+|                                   | execute(Stri                      |
+|                                   | ng, String, OperationParameters)) |
+|                                   | throw an                          |
+|                                   | UnsupportedOperationException.    |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   1.8.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.8.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-15399821                    |
++-----------------------------------+-----------------------------------+
+| ENFORCE_IMPORT_TARGET_SAME_TYPE   | When enabled, the root element of |
+|                                   | import targets is validated to be |
+|                                   | the same as the importing         |
+|                                   | configuration.                    |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.8.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.8.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-15509819                    |
++-----------------------------------+-----------------------------------+
+| mule.honour.persisted.flow.state  | When enabled, flows honor the     |
+|                                   | state configured in               |
+|                                   | flows.deployment.properties when  |
+|                                   | restarting the app, regardless of |
+|                                   | the initial state.                |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.8.0                         |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.8.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-15750334                    |
++-----------------------------------+-----------------------------------+
+| mule                              | When enabled, body contents       |
+| .ntlm.avoid.send.payload.on.type1 | aren’t sent on NTLM type 1        |
+|                                   | requests. This saves resources by |
+|                                   | not sending a payload that is     |
+|                                   | never consumed (the server        |
+|                                   | rejects the payload until the     |
+|                                   | dance is completed).              |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.9.0                         |
+|                                   |                                   |
+|                                   | -   4.8.4                         |
+|                                   |                                   |
+|                                   | -   4.6.12                        |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   4.9.0                         |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-17107281                    |
++-----------------------------------+-----------------------------------+
+| mule.forkJo                       | When enabled, the processors that |
+| in.completeChildContextsOnTimeout | perform fork and join work        |
+|                                   | (currently, Scatter-Gather and    |
+|                                   | Parallel For Each routers)        |
+|                                   | complete the child event contexts |
+|                                   | when a timeout occurs.            |
+|                                   |                                   |
+|                                   | Available Since                   |
+|                                   |                                   |
+|                                   | -   4.9.2                         |
+|                                   |                                   |
+|                                   | -   4.6.14                        |
+|                                   |                                   |
+|                                   | -   4.4.0-20250217                |
+|                                   |                                   |
+|                                   | Enabled by Default Since          |
+|                                   |                                   |
+|                                   | -   Not enabled by default in any |
+|                                   |     Mule version                  |
+|                                   |                                   |
+|                                   | Issue ID                          |
+|                                   |                                   |
+|                                   | -   W-16941297                    |
++-----------------------------------+-----------------------------------+
+
+See Also
+
+Configure System Properties

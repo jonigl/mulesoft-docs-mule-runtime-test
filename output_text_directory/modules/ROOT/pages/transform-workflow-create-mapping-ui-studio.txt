@@ -1,0 +1,15 @@
+1.  Define Input and Output Structure of a Transformation Provide
+    expected input and required output structures.
+
+2.  Graphically Construct a Mapping Drag elements of the input and drop
+    them onto elements of the output. You can also include fixed values
+    and functions to build out the output.
+
+3.  Preview the Output of a Transformation Verify that the
+    transformation produces the expected output.
+
+See Also
+
+Transform Message Component
+
+DataWeave Language

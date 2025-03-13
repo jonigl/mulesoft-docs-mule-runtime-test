@@ -1,0 +1,74 @@
+Mule runtime engine (Mule) is a lightweight integration engine that runs
+Mule applications and supports domains and policies. Mule applications,
+domains, and policies share an XML DSL (domain-specific language).
+
+Mule Applications
+
+Mule applications connect systems, services, APIs, and devices using
+API-led connectivity instead of point-to-point integrations. Mule
+applications provide functionality for message routing, data mapping,
+orchestration, reliability, security, and scalability.
+
+Anypoint Studio supports Mule application development.
+
+Mule Domains
+
+Domains enable you to share global configurations that Mule applications
+need to reuse, such as default error handlers, shared properties,
+scheduler pools, and component configurations. You can only deploy
+domains when running Mule runtime engine on premises.
+
+See Shared Resources for information about developing and configuring
+Mule domains by using Anypoint Studio.
+See Deploy a Domain for domain deployment instructions.
+
+Policies
+
+Policies on HTTP-based APIs can enforce security, regulate traffic
+through Mule applications, and adapt APIs to your business needs.
+
+Mule includes an embedded API Gateway, which enables you to apply
+security policies to an API, enrich incoming or outgoing messages, and
+add capabilities to an API without having to write any code.
+See API Gateway Capabilities for additional information.
+
+API Manager supports the configuration of automated policies. Custom
+policy development and configuration are also supported.
+
+Maven Support
+
+Maven is a project management utility that Mule implements to enhance
+project development. Mule provides built-in Maven functionality. For the
+Mule runtime engine, you can integrate the packaging, testing, and
+deployment of your Mule applications, domains, and custom policies with
+your Maven lifecycle using the Mule Maven plugin.
+
+For details, see Maven Support in Mule.
+
+Mule Installation, Deployment, and Management
+
+For a Mule app to run, it must be deployed to an environment where the
+Mule runtime engine is installed.
+
+Mule is packaged within the Studio IDE and with Design Center on
+Anypoint Platform so that you can run a Mule app as you design it.
+
+cloudhub-2::partial$index-runtime-plane-hosting-options.adoc
+
+In addition to using Runtime Manager, you can perform deployments and
+manage Mule apps with Anypoint CLI 3.x, which includes commands for
+deployments and a number of Anypoint Platform use cases.
+
+See Also
+
+-   Mule Application Development
+
+-   Domains
+
+-   Policies
+
+-   Mule Configuration XML
+
+-   Deployment Strategies
+
+-   Download, Install, Upgrade Mule

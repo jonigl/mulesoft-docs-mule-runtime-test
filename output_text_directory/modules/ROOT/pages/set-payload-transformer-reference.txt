@@ -1,0 +1,49 @@
+The Set Payload (set-payload) component lets you update the payload of
+the message. The payload can be a literal string or a DataWeave
+expression. The set-payload component, however, is not recommended for
+complex expressions or transformations but rather, simple ones, such as
+selections. You should use Transform Message Component for complex
+scenarios.
+
++---------+---------+--------------------------------------------------+
+| Field   | Usage   | Description                                      |
++=========+=========+==================================================+
+| Value   | R       | Accepts a literal string or DataWeave expression |
+| (value) | equired | that defines how to set the payload, for         |
+|         |         | example, "some string" or #[now()].              |
++---------+---------+--------------------------------------------------+
+| Mime    | O       | The mime type of the value assigned to the       |
+| Type    | ptional | payload, for example, text/plain or              |
+| (mi     |         | application/json.                                |
+| meType) |         |                                                  |
++---------+---------+--------------------------------------------------+
+| E       | O       | The encoding of the value assigned to the        |
+| ncoding | ptional | payload, for example, UTF-8.                     |
+| (en     |         |                                                  |
+| coding) |         |                                                  |
++---------+---------+--------------------------------------------------+
+
+The mimeType and encoding attributes will not affect a DataWeave
+expression used as value. They only affect the output Mule Message. If a
+transformation is required, the DataWeave expression must contain an
+explicit output directive.
+
+This XML example sets a payload with static values:
+
+Static Content Example:
+
+    <set-payload value="{ 'name' : 'Ana', 'office' : 'BA' }" mimeType="application/json" encoding="UTF-8"/>
+
+The next example sets the message payload to "Hello, World" appending
+today’s date using a DataWeave expression:
+#['Hello World!' ++ ' Today is ' ++ now()]
+
+Expression Content Example:
+
+    <set-payload value="#['Hello World!' ++ ' Today is ' ++ now()]"/>
+
+See Also
+
+-   Mule Message Structure
+
+-   DataWeave Language

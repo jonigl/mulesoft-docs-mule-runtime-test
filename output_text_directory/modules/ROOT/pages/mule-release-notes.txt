@@ -1,0 +1,1 @@
+release-notes::partial$mule-runtime/mule-rn-landing-page.adoc

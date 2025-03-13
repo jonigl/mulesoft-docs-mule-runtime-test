@@ -1,0 +1,16 @@
+This section covers the migration of API Gateway related features.
+Following topics will be explained:
+
+-   Migrating API Gateways: Autodiscovery
+
+-   Migrating Mule 3 Applications Managed in API Manager
+
+-   Migrating API Gateways: Policies
+
+-   Migrating API Gateways: Proxies
+
+-   Migrating API Gateways: Mule Runtime Configuration
+
+See Also
+
+Core Components Migration

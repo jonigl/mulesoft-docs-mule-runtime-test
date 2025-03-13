@@ -1,0 +1,146 @@
+-   DataWeave Header Content
+
+-   Flow Controls
+
+-   Type References
+
+-   Object Coercion
+
+-   Conditional Key-Value Parenthesis
+
+DataWeave Header Content
+
+Most of the header directives have been changed in DataWeave. The %dw
+directive is an exception. In most cases, MuleSoft removed the %, and in
+some cases the keyword is shortened.
+
++----------------------+----------------------+-----------------------+
+| DataWeave 1.0        | DataWeave 2.0        | Comments              |
++======================+======================+=======================+
+| %dw 1.0              | %dw 2.0              |                       |
++----------------------+----------------------+-----------------------+
+| %input               | input                | In a Mule app flow,   |
+|                      |                      | DataWeave 2.0         |
+|                      |                      | recognizes the input  |
+|                      |                      | MIME type and its     |
+|                      |                      | reader properties     |
+|                      |                      | based on the MIME     |
+|                      |                      | type (outputMimeType) |
+|                      |                      | and parameters        |
+|                      |                      | specified in the      |
+|                      |                      | preceding component.  |
+|                      |                      | The input MIME type   |
+|                      |                      | is not defined using  |
+|                      |                      | the input directive   |
+|                      |                      | in the header         |
+|                      |                      | anymore. However, the |
+|                      |                      | input directive is    |
+|                      |                      | still used in         |
+|                      |                      | specific cases like   |
+|                      |                      | Validate a Script for |
+|                      |                      | Streamed Data.        |
++----------------------+----------------------+-----------------------+
+| %output              | output               |                       |
++----------------------+----------------------+-----------------------+
+| %var                 | var                  |                       |
++----------------------+----------------------+-----------------------+
+| %function            | fun                  |                       |
++----------------------+----------------------+-----------------------+
+| %namespace           | ns                   |                       |
++----------------------+----------------------+-----------------------+
+
+Flow Controls
+
+Flow control changed somewhat in DataWeave 2.
+
+When Otherwise
+
+The when otherwise statement is replaced by if else, for example:
+
+Mule 3 Example: DataWeave 1
+
+    {
+        orderStatus: "complete" when flowVars.purchaseOrderStatus == "C" otherwise "incomplete"
+    }
+
+Mule 4 Example: DataWeave 2
+
+    {
+        orderStatus: if(vars.purchaseOrderStatus == "C") "complete" else "incomplete"
+    }
+
+Pattern Matcher
+
+Pattern matching changed in DataWeave 2. It adds the keyword case and
+else (instead of default). You also no longer separate cases with commas
+(,) since they are now explicitly separated by the case keyword.
+
+Mule 3 Example: DataWeave 1
+
+    'world' match {
+        :string -> true,
+        default -> false
+      }
+
+Mule 4 Example: DataWeave 2
+
+    'world' match {
+        case is String -> true
+        else -> false
+      }
+
+For type pattern matchers, the is keyword needs to be set.
+
+Type References
+
+The : was removed from the type references and are now all camel case,
+so :string is now String
+
+Object Coercion
+
+In DataWeave 1.0, selecting a key-value pair from an object required you
+to do something like this:
+
+Mule 3 Example: DataWeave 1
+
+    %var payload = {a: 1, b:2}
+    ---
+    payload.a as :object
+
+The DataWeave 1.0 expression above returns {a:1}. Because this is a
+coercion, it is also included in the auto-coercion mechanism and
+generates undesired or unexpected results.
+
+In DataWeave 2.0, the coercion is removed, and a new selector (&) is
+introduced to select key-value pair parenthesis.
+
+Mule 3 Example: DataWeave 2
+
+    var payload = {a: 1, b:2}
+    ---
+    payload.&a
+
+This expression also returns {a:1}.
+
+Conditional Key-Value Parenthesis
+
+In DataWeave 1.0, conditional key-value pairs are declared with the when
+keyword.
+
+Mule 3 Example: DataWeave 1
+
+    {
+        (a: 1) when payload.product == "Mule"
+    }
+
+In DataWeave 2.0, you use the if keyword.
+
+Mule 4 Example: DataWeave 2
+
+    {
+        (a: 1) if payload.product == "Mule"
+    }
+
+See Also
+
+Introduction to Mule 4: DataWeave 2.0

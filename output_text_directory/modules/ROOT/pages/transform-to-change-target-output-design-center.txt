@@ -1,0 +1,47 @@
+By default, the Transform component outputs to the payload of a Mule
+event. You can also output data to a variable or attribute that you
+create.
+
+Before you begin, you should set up a basic flow that sends the
+Transform component Input data.
+
+1.  From the Mapping tab in the Transform component, click the title of
+    the Output column, which should say Output Payload by default.
+
+2.  Select Add Transformation.
+
+3.  Select one of these types:
+
+    -   Attributes
+
+    -   Variable
+
+4.  For a variable, provide a name.
+
+5.  Create or select a data type for the attribute or variable.
+
+6.  Map the portion of the Transformer input that you want to output to
+    the attribute or variable.
+
+    Note that you can check your mapping by adding a Logger after the
+    Transformer, for example:
+
+    -   Logger message for an attribute: message.attributes
+
+    -   Logger message for the variable myVar: vars.myVar
+
+        After deploying your app, the Logs should output your logger
+        message.
+
+Remove an Output Transformation
+
+1.  Click the title of the Output column.
+
+2.  Click the Trash Can icon for the transformation that you want to
+    delete.
+
+See Also
+
+Mule Message Structure
+
+DataWeave Language

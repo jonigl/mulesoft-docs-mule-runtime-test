@@ -1,0 +1,107 @@
+You can enable verbose logging for different modules and connectors.
+Because of the high impact to application performance, limit verbose
+logging to testing and troubleshooting operations.
+
+Configure Verbose Logging
+
+To configure verbose logging, add an entry to your log4j2.xml file,
+indicating the package names of the connectors or modules you want to
+log, and set the log level to DEBUG.
+
+The following example shows how to find the package names for Anypoint
+Connector JMS (JMS Connector) and configure verbose logging:
+
+1.  In the Package Explorer view, open the JMS Connector package
+    library.
+
+2.  Inside the .jar file, locate all Mule-related packages.
+
+    [A package Explorer view listing various Java packages and libraries
+    in a development environment]
+
+3.  Add an entry to your log4j2.xml file, indicating the package name
+    and log level = DEBUG:
+
+        <Loggers>
+            ...
+            <AsyncLogger name="org.mule.extensions.jms" level="DEBUG"/>
+            ...
+        </Loggers>
+
+Common Connector Package Names
+
+The following table shows some common Anypoint Connectors and their
+package names so you don’t have to search for them:
+
++-----------------+-----------------------------------------------------+
+| Connector Name  | Package Names                                       |
++=================+=====================================================+
+| Anypoint        | o                                                   |
+| Connector for   | rg.mule.service.http.impl.service.HttpMessageLogger |
+| HTTP            |                                                     |
++-----------------+-----------------------------------------------------+
+| Anypoint        | org.mule.extension.salesforce                       |
+| Connector for   |                                                     |
+| Salesforce      |                                                     |
++-----------------+-----------------------------------------------------+
+| Anypoint        | org.mule.extension.ftp                              |
+| Connector for   |                                                     |
+| FTP             |                                                     |
++-----------------+-----------------------------------------------------+
+| Anypoint        | -   org.mule.extension.sftp                         |
+| Connector for   |                                                     |
+| SFTP            | -   com.jcraft                                      |
++-----------------+-----------------------------------------------------+
+| Anypoint        | com.mulesoft.extension.ftps                         |
+| Connector for   |                                                     |
+| FTPS            |                                                     |
++-----------------+-----------------------------------------------------+
+| Anypoint        | -   httpclient.wire.header                          |
+| Connector for   |                                                     |
+| NetSuite        | -   httpclient.wire.content                         |
+|                 |                                                     |
+|                 | -   httpclient.wire                                 |
+|                 |                                                     |
+|                 | -   org.apache.commons.httpclient                   |
+|                 |                                                     |
+|                 | -   org.apache.http                                 |
+|                 |                                                     |
+|                 | -   org.mule.module.netsuite                        |
+|                 |                                                     |
+|                 | -   com.netsuite.webservices                        |
+|                 |                                                     |
+|                 | -   o                                               |
+|                 | rg.mule.service.http.impl.service.HttpMessageLogger |
+|                 |                                                     |
+|                 | -   org.mule.module.netsuite.extension              |
+|                 | .internal.connection.provider.soap.JavaWSDispatcher |
++-----------------+-----------------------------------------------------+
+| Anypoint        | -   org.mule.extension.sqs                          |
+| Connector for   |                                                     |
+| Amazon SQS      | -   org.apache.http                                 |
++-----------------+-----------------------------------------------------+
+| Anypoint        | -   o                                               |
+| Connector for   | rg.mule.service.http.impl.service.HttpMessageLogger |
+| Microsoft       |                                                     |
+| Dynamics 365    | -   org.apache.http                                 |
+|                 |                                                     |
+|                 | -   org.mule.extension.microsoftdynamics365         |
++-----------------+-----------------------------------------------------+
+| Anypoint        | org.mule.modules.sap                                |
+| Connector for   |                                                     |
+| MuleSoft SAP    |                                                     |
++-----------------+-----------------------------------------------------+
+| Anypoint        | -   com.mulesoft.extension.mq                       |
+| Connector for   |                                                     |
+| Anypoint MQ     | -   com.mulesoft.mq                                 |
++-----------------+-----------------------------------------------------+
+| Anypoint        | org.mule.extension.db                               |
+| Connector for   |                                                     |
+| Database        |                                                     |
++-----------------+-----------------------------------------------------+
+| Anypoint        | -   org.apache.http.wire                            |
+| Connector for   |                                                     |
+| Microsoft       | -   org.apache.http                                 |
+| SharePoint      |                                                     |
+| (version 3.x)   |                                                     |
++-----------------+-----------------------------------------------------+

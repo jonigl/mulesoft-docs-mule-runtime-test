@@ -1,0 +1,8 @@
+Unresolved directive in set-transaction-id.adoc -
+include::partial$set-transaction-id.adoc[]
+
+See Also
+
+-   Business Events
+
+-   Configure Default Events Tracking

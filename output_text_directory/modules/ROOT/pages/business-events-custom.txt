@@ -1,0 +1,63 @@
+Use the Custom Business Event component (tracking:custom-event element
+in the XML view) to add metadata and Key Performance Indicators (KPIs)
+to your flow. Configure the component as follows:
+
+1.  Click the Mule Palette tab in Anypoint Studio.
+
+2.  Drag Custom Business Event to any point of your flow.
+
+3.  Open the component properties view and specify values for Display
+    Name and Event Name:
+
+    [Setup for a custom business event]
+
+You can also configure Key Performance Indicators (KPIs) to capture
+information from the message payload:
+
+-   In the UI:
+
+    1.  Click the plus button ([Add icon]]) inside Key Performance
+        Indicators.
+
+    2.  Configure Name and Expression / Value:
+
+        [A configuration panel showing settings for a key performance
+        indicator]
+
+-   In the XML:
+
+    1.  Add a child tracking:meta-data element to the
+        tracking:custom-event.
+
+    2.  Configure the key and value attributes inside
+        tracking:meta-data:
+
+        For example:
+
+            <tracking:custom-event doc:name="Custom Business Event" event-name="New order">
+                        <tracking:meta-data key="order-id" value="#[payload.order.header.orderID]" />
+            </tracking:custom-event>
+
+For your KPIs, use names that are easy to search for in the Anypoint
+Runtime Manager interface, and use a representative value, which can be
+any Mule expression:
+
++-----------------------------------+-----------------------------------+
+| Name                              | Expression / Value                |
++===================================+===================================+
+| employee-id                       | #[payload['ID']]                  |
++-----------------------------------+-----------------------------------+
+| employee-email                    | #[payload['Email']]               |
++-----------------------------------+-----------------------------------+
+| employee-git-id                   | #[payload['GITHUB_ID']]           |
++-----------------------------------+-----------------------------------+
+| price                             | 700                               |
++-----------------------------------+-----------------------------------+
+| price-after-discount              | #[vars.price]                     |
++-----------------------------------+-----------------------------------+
+| order-id                          | #[payload.order.header.orderID]   |
++-----------------------------------+-----------------------------------+
+
+See Also
+
+Business Events

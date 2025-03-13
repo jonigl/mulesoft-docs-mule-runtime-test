@@ -1,0 +1,16 @@
+In Mule 4, the Anypoint Enterprise Security module was split into
+different modules:
+
+-   Cryptography Module replaces the Mule 3 Encryption and Signature
+    modules
+
+-   Secure Configuration Properties Module replaces the Mule 3 Secure
+    Property Placeholder
+
+-   Validation Module incorporated functionality from the Mule 3 Filters
+    Module
+
+-   OAuth2 Provider replaces the Mule 3 OAuth2 Provider
+
+Please refer to the above modules documentation for information on how
+to migrate to Mule 4.

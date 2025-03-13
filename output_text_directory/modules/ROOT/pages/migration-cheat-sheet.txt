@@ -1,0 +1,79 @@
+To help you move from Mule 3 to Mule 4, we built this index to help you
+find the Mule 4 equivalent of the most common Mule 3 use cases.
+
+IMPORTANT: Keep in mind that this index is only intended to act as a
+quick entry to the most common migration scenarios. It doesn’t contain
+the entire migration guide. For the full set of migration articles,
+please visit our Mule Mule 4 for Mule 3 Users page.
+
+-   Configuration Properties: There’s a new way of handling
+    configuration properties in Mule 4
+
+-   Using Secure Properties: Secure placeholders are now a Runtime
+    feature and no longer part of the Security Module
+
+-   Using the HTTP Connector: The new HTTP connector has some
+    differences with Mule 3, especially when it comes to handling
+    multipart and form requests.
+
+-   From MEL to DataWeave: DataWeave 2.0 is now the expression language.
+    Here’s how to adapt your MEL expressions to DataWeave.
+
+-   From DataWeave 1.0 to DataWeave 2.0: A new version of DataWeave is
+    available in Mule 4
+
+-   Where are the explicit transformers?: Transformers like
+    <object-to-string /> or <object-to-json> are no longer necessary.
+    Mule handles this automatically under the covers
+
+-   Define a custom Object Store: Custom Object Stores are now defined
+    through the new connector
+
+-   Use watermarks: Watermarks have been simplified. You can also do it
+    manually now allowing for more complex use cases.
+
+-   Accessing the Mule Message: The Mule Message has a new structure and
+    it’s accessed differently. Here’s a quick overview.
+
+-   Using Java: Interoperability with Java is now done through the Java
+    module. Optionally you can also try the Scripting module or the Mule
+    SDK
+
+-   Using Spring: Instead of defining Spring beans directly in your
+    application, you can now use the Spring Module.
+
+-   Using reconnection strategies: There are some small but important
+    differences around reconnection in Mule 4.
+
+-   Classloading isolation: Classloading isolation changes the way
+    resources and classes are shared. Read this article to learn more.
+
+-   Core Components Migration: A comprehensive list of the changes that
+    were made to the core language elements
+
+-   Using the new connectors: A comprehensive list of the changes that
+    were made to the main connectors.
+
+-   Using the Security Module (AES): Anypoint Enterprise Security module
+    was split into different modules explained here.
+
+-   Migrating Gateways: This section covers the migration of API Gateway
+    related features.
+
+-   Migrating ApiKit apps: Covers the necessary steps to successfully
+    migrate APIkit-based applications.
+
+-   Migrating custom components: You can use the Mule SDK to create your
+    own reusable components
+
+-   Migrating DevKit based components: There’s a DevKit Migration Tool
+    that helps to migrate DevKit projects for Mule 3 into Mule SDK ones.
+
+-   Transport service overrides: Covers how to migrate from generic
+    transports.
+
+-   mule-high-availability-ha-clusters.xml: At a container level, change
+    the property from mule.clusterPartitioningMode=OPTIMIZE_PERFORMANCE
+    to mule.cluster.storeprofile=performance. At an individual
+    application level, you can configure the store profile for a
+    specific Mule application.
